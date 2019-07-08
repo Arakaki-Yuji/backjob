@@ -1,0 +1,5 @@
+.ac-php-conf.json
+vendor
+env.sh
+go-pear.phar
+composer.lock

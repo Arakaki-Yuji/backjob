@@ -1,0 +1,20 @@
+{
+    "name": "arakaki-yuji/backjob",
+    "description": "it is a job queue library",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Arakaki-Yuji",
+            "email": "arakaji0830@gmail.com"
+        }
+    ],
+    "require": {
+        "microsoft/azure-storage-queue": "^1.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {"Backjob\\": "src/"}
+    }
+}

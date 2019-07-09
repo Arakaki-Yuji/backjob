@@ -84,13 +84,13 @@ class Job implements JobInterface
         // 子クラス側で実装する
     }
 
-    protected function fail()
+    public function fail()
     {
         // 基底クラスなので何もしない
         // 子クラス側で実装する
     }
 
-    protected function success()
+    public function success()
     {
         // 基底クラスなので何もしない
         // 子クラス側で実装する

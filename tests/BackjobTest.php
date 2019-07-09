@@ -22,6 +22,12 @@ class BackjobTest extends TestCase
         $client->clearMessages($this->queueName);
     }
 
+    public function testFactory()
+    {
+        $backjob = Backjob::factory($this->accountName, $this->queueName, $this->accessKey);
+        $this->assertInstanceOf('Backjob\Backjob', $backjob);
+    }
+
     public function testConstructor()
     {
         $adapter = new Adapter($this->accountName, $this->queueName);

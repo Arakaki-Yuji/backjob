@@ -2,6 +2,9 @@
 
 namespace Backjob;
 
+use Backjob\Backend\Azurequeue\Adapter;
+
+
 class Backjob
 {
     private $adapter;
@@ -9,6 +12,14 @@ class Backjob
     public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
+    }
+
+    public static function factory(string $serviceAccountName,
+                                   string $queueName,
+                                   string $accessKey)
+    {
+        $adapter = Adapter::createAdapter($serviceAccountName, $queueName, $accessKey);
+        return new Backjob($adapter);
     }
 
     public function getAdapter(): AdapterInterface

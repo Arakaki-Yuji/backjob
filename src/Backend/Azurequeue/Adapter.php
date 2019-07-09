@@ -75,18 +75,17 @@ class Adapter implements AdapterInterface
         $msgOptions->setVisibilityTimeoutInSeconds(300);
         $messageResult = $this->client->listMessages($this->queueName, $msgOptions);
         $messages = $messageResult->getQueueMessages();
-        $queueMsg = $messages[0];
-
-        if($queueMsg){
-            $this->client->deleteMessage(
-                $this->queueName,
-                $queueMsg->getMessageId(),
-                 $queueMsg->getPopReceipt()
-            );
-            return $this->message2Job($queueMsg);
-        }else{
+        
+        if(count($messages) < 1){
             return null;
         }
+        $queueMsg = $messages[0];
+        $this->client->deleteMessage(
+            $this->queueName,
+            $queueMsg->getMessageId(),
+            $queueMsg->getPopReceipt()
+        );
+        return $this->message2Job($queueMsg);
     }
 
     public function countWaitingJobs()

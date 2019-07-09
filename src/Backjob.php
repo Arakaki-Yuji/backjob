@@ -19,6 +19,9 @@ class Backjob
     public function run()
     {
         $job = $this->adapter->dequeue();
+        if(is_null($job)){
+            return null;
+        }
         try {
             $result = $job->run();
         }catch(\Exception $e){

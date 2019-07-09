@@ -36,13 +36,10 @@ class Backjob
         try {
             $result = $job->run();
         }catch(\Exception $e){
-
-            $job->fail();
-
-            if($job->enableRetry()){
-                $job->incrementCurrentRetry();
-                $this->adapter->enqueue($job);
-            }
+            $this->afterFail($job, $e);
+            throw $e;
+        }catch(\Error $e){
+            $this->afterFail($job, $e);
             throw $e;
         }
 
@@ -54,6 +51,15 @@ class Backjob
     public function queue(Job $job)
     {
         return $this->adapter->enqueue($job);
+    }
+
+    private function afterFail($job)
+    {
+        $job->fail();
+        if($job->enableRetry()){
+            $job->incrementCurrentRetry();
+            $this->adapter->enqueue($job);
+        }
     }
 
 }

@@ -19,7 +19,7 @@ class Job implements JobInterface
         $this->id = $id;
         $this->params = $params;
         $this->popReceipt = $popReceipt;
-        $this->createdAt = $createdAt;
+        $this->createdAt = $createdAt ?? time();
     }
 
     static public function makeJob($params)

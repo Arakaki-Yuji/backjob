@@ -55,7 +55,8 @@ class AdapterTest extends TestCase
         $job = new Job(null, ['test' => true]);
         $this->assertEquals(json_encode(['class_name' => 'Backjob\Job',
                                          'params' => ['test' => true],
-                                         'currentRetry' => 0]),
+                                         'currentRetry' => 0,
+                                         'createdAt' => time()]),
                             $adapter->job2MessageText($job));
     }
 
@@ -93,7 +94,8 @@ class AdapterTest extends TestCase
 
     public function testMessage2Job()
     {
-        $params = ['class_name' => 'Backjob\Job', 'params' => ['test'=>true], 'currentRetry' => 3];
+        $now = time() - 100;
+        $params = ['class_name' => 'Backjob\Job', 'params' => ['test'=>true], 'currentRetry' => 3, 'createdAt' => $now];
         $msgText = json_encode($params);
         $queueMsg = new QueueMessage;
         $queueMsg->setMessageText($msgText);
@@ -108,6 +110,7 @@ class AdapterTest extends TestCase
         $this->assertEquals('test-message-id-1234', $job->getId());
         $this->assertEquals('test-pop-receipe-1234', $job->getPopReceipt());
         $this->assertEquals(3, $job->getCurrentRetry());
+        $this->assertEquals($now, $job->getCreatedAt());
     }
 
     public function testCountWaitingJobs()

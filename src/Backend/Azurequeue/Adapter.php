@@ -47,7 +47,8 @@ class Adapter implements AdapterInterface
         return json_encode([
             'class_name' => get_class($job),
             'params' => $job->getParams(),
-            'currentRetry' => $job->getCurrentRetry()
+            'currentRetry' => $job->getCurrentRetry(),
+            'createdAt' => $job->getCreatedAt()
         ]);
     }
 
@@ -57,7 +58,11 @@ class Adapter implements AdapterInterface
         $array = json_decode($msgText, true);
         $class_name = $array['class_name'];
         $params = $array['params'];
-        $job = new $class_name($msg->getMessageId(), $params, $msg->getPopReceipt());
+        $createdAt = $array['createdAt'];
+        $job = new $class_name($msg->getMessageId(),
+                               $params,
+                               $msg->getPopReceipt(),
+                               $createdAt);
         $job->setCurrentRetry($array['currentRetry'] ?? 0);
         return $job;
     }

@@ -16,7 +16,7 @@ Include arakaki-yuji/backjob in your project, by adding it to your composer.json
 
 # Usage
 
-## define your own Job
+## Define your own Job
 
 ``` php
 class CustomJob extends \Backjob\Job
